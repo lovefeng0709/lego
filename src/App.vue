@@ -1,30 +1,27 @@
 <template>
-  <h1>慕课乐高标准模版</h1>
-  <ul>
-    <li>开箱即用</li>
-    <li>typescript</li>
-    <li>Vue3</li>
-    <li>支持 tsx</li>
-    <li>eslint</li>
-    <li>简单易用可扩展</li>
-  </ul>
+  <div class="homepage-container">
+    <a-layout :style="{ background: '#fff' }">
+      <a-layout-header class="header">
+        <div class="page-title">乐高</div>
+      </a-layout-header>
+      <a-layout-content class="home-layout">
+        <router-view></router-view>
+      </a-layout-content>
+    </a-layout>
+    <a-layout-footer> © xxxx版权所有 | 津ICP备20000929号-2 </a-layout-footer>
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: 'App',
+  name: "App",
 });
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.page-title {
+  color: #fff;
 }
 </style>
