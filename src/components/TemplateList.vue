@@ -31,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import { TemplateProps } from "@/store";
+import { TemplateProps } from "@/store/templates";
 import { defineComponent, PropType } from "vue";
 export default defineComponent({
   name: "template-list",

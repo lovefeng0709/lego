@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts">
-import { UserProps } from "@/store"
+import { UserProps } from "@/store/user"
 import { message } from "ant-design-vue"
 import { defineComponent,PropType } from "vue"
 import { useStore } from "vuex"

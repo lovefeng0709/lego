@@ -7,7 +7,9 @@
       <a-layout style="padding: 0 24px 24px">
         <a-layout-content class="preview-container">
           <p>画布区域</p>
-          <div class="preview-list" id="canvas-area"></div>
+          <div class="preview-list" id="canvas-area">
+            <div v-for="c in components" :key="c.id" >{{c.props.text}}</div> 
+          </div>
         </a-layout-content>
       </a-layout>
       <a-layout-sider
@@ -21,10 +23,20 @@
   </div>
 </template>
 
-<script>
-import { defineComponent } from "vue";
-
-export default defineComponent({});
+<script lang="ts">
+import { GlobalDataProps } from "@/store";
+import { ComponentData } from "@/store/editor";
+import { computed, defineComponent } from "vue";
+import { useStore } from "vuex";
+export default defineComponent({
+  setup () {
+    const store = useStore<GlobalDataProps>()
+    const components = computed<ComponentData[]>(() =>store.state.editor.components)
+    return {
+      components
+    }
+  }
+});
 </script>
 
 <style>

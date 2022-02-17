@@ -6,6 +6,7 @@
 
 <script lang="ts">
 import { GlobalDataProps } from "@/store";
+import { TemplateProps } from "@/store/templates";
 import { defineComponent, computed } from "vue";
 import { useStore } from "vuex";
 import TemplateList from "../components/TemplateList.vue";
@@ -16,7 +17,7 @@ export default defineComponent({
   },
   setup() {
     const store = useStore<GlobalDataProps>();
-    const testData = computed(() => store.state.templates);
+    const testData = computed<TemplateProps[]>(() => store.state.templates.data);
     return {
       testData,
     };
