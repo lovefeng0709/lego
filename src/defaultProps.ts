@@ -44,7 +44,9 @@ export const textStylePropNames = without(
   "url",
   "text"
 );
-export const transformToComponentProps = (props: { [key: string]: any }) => {
+export const transformToComponentProps = <T extends { [key: string]: any }>(
+  props: T
+) => {
   return mapValues(props, (item) => {
     return {
       type: item.constructor,

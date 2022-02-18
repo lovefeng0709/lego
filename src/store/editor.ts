@@ -27,7 +27,16 @@ export const testComponents: ComponentData[] = [
     name: "l-text",
     props: { text: "hello2", fontSize: "24px", fontWeight: "500" },
   },
-  { id: uuidv4(), name: "l-text", props: { text: "hello3", fontSize: "28px" } },
+  {
+    id: uuidv4(),
+    name: "l-text",
+    props: {
+      text: "hello3",
+      fontSize: "28px",
+      actionType: "url",
+      url: "https://www.tslang.cn/docs/handbook/generics.html",
+    },
+  },
 ];
 const editor: Module<EditorProps, GlobalDataProps> = {
   state: {
