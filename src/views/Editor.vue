@@ -2,13 +2,18 @@
   <div class="editor-container">
     <a-layout>
       <a-layout-sider width="300" style="background: yellow">
-        <div class="sidebar-container">组件列表</div>
+        <div class="sidebar-container">
+          组件列表
+           <components-list :list="defaultTextTemplates" @onItemClick='addItem'/>
+        </div>
       </a-layout-sider>
       <a-layout style="padding: 0 24px 24px">
         <a-layout-content class="preview-container">
           <p>画布区域</p>
           <div class="preview-list" id="canvas-area">
-            <component :is="c.name" v-for="c in components" :key="c.id" v-bind="c.props"></component> 
+            <edit-wrapper v-for="c in components" :key="c.id" :id="c.id"   @setActive="setActive" :active="c.id===currentElement?.id">
+               <component :is="c.name"  v-bind="c.props"></component> 
+            </edit-wrapper>
           </div>
         </a-layout-content>
       </a-layout>
@@ -18,6 +23,9 @@
         class="settings-panel"
       >
         组件属性
+        <pre>
+          {{currentElement?.props}}
+        </pre>
       </a-layout-sider>
     </a-layout>
   </div>
@@ -28,16 +36,32 @@ import { GlobalDataProps } from "@/store";
 import { ComponentData } from "@/store/editor";
 import { computed, defineComponent } from "vue";
 import { useStore } from "vuex";
+import {defaultTextTemplates} from "../defaultTemplates"
 import LText from '../components/LText.vue'
+import ComponentsList from '../components/ComponentsList.vue'
+import EditWrapper from '../components/EditWrapper.vue'
 export default defineComponent({
   components:{
-    LText
+    LText,
+    ComponentsList,
+    EditWrapper
   },
   setup () {
     const store = useStore<GlobalDataProps>()
     const components = computed<ComponentData[]>(() =>store.state.editor.components)
+    const currentElement= computed<ComponentData | null>(() => store.getters.getCurrentElement)
+    const addItem = (props: any) => {
+      store.commit('addComponent',props)
+    }
+    const setActive= (id: string)=>{
+      store.commit('setActive',id)
+    }
     return {
-      components
+      components,
+      defaultTextTemplates,
+      addItem,
+      setActive,
+      currentElement
     }
   }
 });
