@@ -21,12 +21,25 @@ export const testComponents: ComponentData[] = [
   {
     id: uuids4(),
     name: "l-text",
-    props: { text: "hello1", fontSize: "20px", color: "red" },
+    props: {
+      text: "hello1",
+      fontSize: "20px",
+      color: "red",
+      lineHeight: "1",
+      textAlign: "left",
+      fontFamily: "",
+    },
   },
   {
     id: uuids4(),
     name: "l-text",
-    props: { text: "hello2", fontSize: "24px", fontWeight: "500" },
+    props: {
+      text: "hello2",
+      fontSize: "24px",
+      fontWeight: "500",
+      lineHeight: "2",
+      textAlign: "center",
+    },
   },
   {
     id: uuids4(),
