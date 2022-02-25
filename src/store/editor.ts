@@ -1,7 +1,7 @@
 import { Module } from "vuex";
-import { v4 as uuids4 } from "uuid";
+import { v4 as uuidv4 } from "uuid";
 import { GlobalDataProps } from "./index";
-import { TextComponentProps } from "@/defaultProps";
+import { TextComponentProps } from "../defaultProps";
 export interface EditorProps {
   // 供中间编辑器渲染的数组
   components: ComponentData[];
@@ -11,7 +11,7 @@ export interface EditorProps {
 }
 export interface ComponentData {
   // 这个元素的 属性，属性请详见下面
-  props: { [key: string]: any };
+  props: Partial<TextComponentProps>;
   // id，uuid v4 生成
   id: string;
   // 业务组件库名称 l-text，l-image 等等
@@ -19,10 +19,10 @@ export interface ComponentData {
 }
 export const testComponents: ComponentData[] = [
   {
-    id: uuids4(),
+    id: uuidv4(),
     name: "l-text",
     props: {
-      text: "hello1",
+      text: "hello",
       fontSize: "20px",
       color: "red",
       lineHeight: "1",
@@ -31,27 +31,32 @@ export const testComponents: ComponentData[] = [
     },
   },
   {
-    id: uuids4(),
+    id: uuidv4(),
     name: "l-text",
     props: {
       text: "hello2",
-      fontSize: "24px",
-      fontWeight: "500",
+      fontSize: "10px",
+      fontWeight: "bold",
       lineHeight: "2",
-      textAlign: "center",
+      textAlign: "left",
+      fontFamily: "",
     },
   },
   {
-    id: uuids4(),
+    id: uuidv4(),
     name: "l-text",
     props: {
       text: "hello3",
-      fontSize: "28px",
+      fontSize: "15px",
       actionType: "url",
-      url: "https://www.tslang.cn/docs/handbook/generics.html",
+      url: "https://www.baidu.com",
+      lineHeight: "3",
+      textAlign: "left",
+      fontFamily: "",
     },
   },
 ];
+
 const editor: Module<EditorProps, GlobalDataProps> = {
   state: {
     components: testComponents,
@@ -60,7 +65,7 @@ const editor: Module<EditorProps, GlobalDataProps> = {
   mutations: {
     addComponent(state, props: Partial<TextComponentProps>) {
       const newComponent: ComponentData = {
-        id: uuids4(),
+        id: uuidv4(),
         name: "l-text",
         props,
       };
@@ -78,4 +83,5 @@ const editor: Module<EditorProps, GlobalDataProps> = {
     },
   },
 };
+
 export default editor;

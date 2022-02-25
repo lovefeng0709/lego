@@ -3,7 +3,7 @@
     <div v-for="(item,index) in finalProps" :key="index"  class="prop-item">
       <span class="label" v-if="item.text">{{item.text}}</span>
       <div class="prop-component">
-        <component :is="item.component" :value="item.value" v-bind="item.extraProps">
+        <component :is="item.component" :[item.valueProp]="item.value" v-bind="item.extraProps" v-on="item.events">
           <template v-if="item.options">
             <component :is="item.subComponent" v-for="(v,index) in item.options" :value="v.value" :key="index" >{{v.text}}</component>
           </template>
@@ -17,9 +17,20 @@
 
 <script lang="ts">
 import { TextComponentProps } from "@/defaultProps"
-import { mapPropsToForms, PropsToForms } from "@/propsMap"
+import { mapPropsToForms } from "@/propsMap"
 import { reduce } from "lodash-es"
 import { computed, defineComponent, PropType } from "vue"
+interface FormProps {
+  component: string;
+  subComponent?: string;
+  value: string;
+  extraProps?: { [key: string]: any };
+  text?: string;
+  options?: { text: string; value: any }[];
+  valueProp: string;
+  eventName: string;
+  events: { [key: string]: (e: any) => void };
+}
 export default defineComponent({
   name: 'props-table',
   props:{
@@ -28,17 +39,27 @@ export default defineComponent({
       required: true
     }
   },
-  setup (props) {
+  emits: ['change'],
+  setup (props,context) {
     const finalProps = computed(()=>{
       return reduce(props.props, function(result, value, key) {
       const newKey = key as keyof TextComponentProps
         const item = mapPropsToForms[newKey]
         if (item) {
-          item.value = item.initalTransform ? item.initalTransform(value) : value
-          result[newKey] = item
+         const { valueProp = 'value', eventName = 'change', initalTransform } = item
+          const newItem: FormProps = {
+            ...item,
+            value: initalTransform ? initalTransform(value) : value,
+            valueProp,
+            eventName,
+            events: {
+              [eventName]: (e: any) => { context.emit('change', { key, value: e })}
+            }
+         }
+          result[newKey] = newItem
         }
         return result
-      },  {} as Required<PropsToForms>)
+      }, {} as { [key: string]: FormProps })
     })
 
     return {

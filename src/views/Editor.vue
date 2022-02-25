@@ -23,7 +23,7 @@
         style="background: white"
       >
         组件属性
-        <props-table v-if="currentElement&&currentElement.props" :props="currentElement.props"></props-table>
+        <props-table v-if="currentElement&&currentElement.props" :props="currentElement.props" @change="handleChange"></props-table>
       </a-layout-sider>
     </a-layout>
   </div>
@@ -56,12 +56,16 @@ export default defineComponent({
     const setActive= (id: string)=>{
       store.commit('setActive',id)
     }
+    const handleChange = (e: any)=>{
+      console.log(e)
+    }
     return {
       components,
       defaultTextTemplates,
       addItem,
       setActive,
-      currentElement
+      currentElement,
+      handleChange
     }
   }
 });

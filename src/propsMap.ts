@@ -6,10 +6,11 @@ export interface PropToForm {
     text: string;
     value: any;
   }[];
-  value?: string;
   extraProps?: { [key: string]: any };
   text?: string;
   initalTransform?: (value: any) => any;
+  valueProp?: string;
+  eventName?: string;
 }
 export type PropsToForms = {
   [P in keyof TextComponentProps]?: PropToForm;
