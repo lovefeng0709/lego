@@ -24,6 +24,7 @@
       >
         组件属性
         <props-table v-if="currentElement&&currentElement.props" :props="currentElement.props" @change="handleChange"></props-table>
+       <pre>{{currentElement?.props}}</pre>
       </a-layout-sider>
     </a-layout>
   </div>

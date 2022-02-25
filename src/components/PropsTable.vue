@@ -5,7 +5,7 @@
       <div class="prop-component">
         <component :is="item.component" :[item.valueProp]="item.value" v-bind="item.extraProps" v-on="item.events">
           <template v-if="item.options">
-            <component :is="item.subComponent" v-for="(v,index) in item.options" :value="v.value" :key="index" >{{v.text}}</component>
+            <component :is="item.subComponent" v-for="(v,index) in item.options" :value="v.value"  :key="index" >{{v.text}}</component>
           </template>
         </component>
       </div>
@@ -19,14 +19,14 @@
 import { TextComponentProps } from "@/defaultProps"
 import { mapPropsToForms } from "@/propsMap"
 import { reduce } from "lodash-es"
-import { computed, defineComponent, PropType } from "vue"
+import { computed, defineComponent, PropType, VNode } from "vue"
 interface FormProps {
   component: string;
   subComponent?: string;
   value: string;
   extraProps?: { [key: string]: any };
   text?: string;
-  options?: { text: string; value: any }[];
+  options?: { text: string | VNode; value: any }[];
   valueProp: string;
   eventName: string;
   events: { [key: string]: (e: any) => void };
