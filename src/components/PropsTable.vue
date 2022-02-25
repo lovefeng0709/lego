@@ -46,14 +46,14 @@ export default defineComponent({
       const newKey = key as keyof TextComponentProps
         const item = mapPropsToForms[newKey]
         if (item) {
-         const { valueProp = 'value', eventName = 'change', initalTransform } = item
+         const { valueProp = 'value', eventName = 'change', initalTransform, afterTransform } = item
           const newItem: FormProps = {
             ...item,
             value: initalTransform ? initalTransform(value) : value,
             valueProp,
             eventName,
             events: {
-              [eventName]: (e: any) => { context.emit('change', { key, value: e })}
+              [eventName]: (e: any) => { context.emit('change', { key, value: afterTransform? afterTransform(e) : e  })}
             }
          }
           result[newKey] = newItem
